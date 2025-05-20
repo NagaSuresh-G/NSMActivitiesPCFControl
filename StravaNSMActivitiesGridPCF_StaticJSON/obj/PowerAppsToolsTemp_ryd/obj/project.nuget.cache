@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "bSFNMVwTNQhRN91ejtFB62SbUQ3nqsQqZiadjaOTyHFKNgwPHY1qkE0gZqcgMC4K5xK1nsDvRLmVVu0PXdLnCw==",
+  "success": true,
+  "projectFilePath": "D:\\NagaSuresh G\\PCF Controls\\DataSetPCF\\obj\\PowerAppsToolsTemp_ryd\\PowerAppsToolsTemp_ryd.cdsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.0\\microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.powerapps.msbuild.pcf\\1.33.3\\microsoft.powerapps.msbuild.pcf.1.33.3.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.powerapps.msbuild.solution\\1.33.3\\microsoft.powerapps.msbuild.solution.1.33.3.nupkg.sha512"
+  ],
+  "logs": []
+}

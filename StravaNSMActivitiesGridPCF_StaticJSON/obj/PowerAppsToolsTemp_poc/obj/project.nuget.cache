@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "MF0v4O0pMRkvZkWifPwiFKgQExyMHJpYltLd9VbLXdcA5GpsVltbJEvVTf/Nlrd0Mv5uQ/HdNwrCf91nzv5Yhg==",
+  "success": true,
+  "projectFilePath": "D:\\NagaSuresh G\\Strava NSM\\StravaNSMEmailGridPCF_CRMdata\\obj\\PowerAppsToolsTemp_poc\\PowerAppsToolsTemp_poc.cdsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.0\\microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.powerapps.msbuild.pcf\\1.42.1\\microsoft.powerapps.msbuild.pcf.1.42.1.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.powerapps.msbuild.solution\\1.42.1\\microsoft.powerapps.msbuild.solution.1.42.1.nupkg.sha512"
+  ],
+  "logs": []
+}

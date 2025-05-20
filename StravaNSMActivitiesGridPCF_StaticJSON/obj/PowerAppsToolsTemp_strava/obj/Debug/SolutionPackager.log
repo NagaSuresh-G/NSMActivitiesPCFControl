@@ -1,0 +1,20 @@
+2025-05-20 18:17:57.442 - Info	
+Packing D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMActivitiesGridPCF_StaticJSON\obj\PowerAppsToolsTemp_strava\obj\Debug\Metadata to bin\Debug\PowerAppsToolsTemp_strava.zip
+
+2025-05-20 18:17:57.455 - Info	Processing Component: Entities
+2025-05-20 18:17:57.457 - Info	Processing Component: Roles
+2025-05-20 18:17:57.460 - Info	Processing Component: Workflows
+2025-05-20 18:17:57.460 - Info	Processing Component: FieldSecurityProfiles
+2025-05-20 18:17:57.461 - Info	Processing Component: Templates
+2025-05-20 18:17:57.461 - Info	Processing Component: EntityMaps
+2025-05-20 18:17:57.461 - Info	Processing Component: EntityRelationships
+2025-05-20 18:17:57.464 - Info	Processing Component: OrganizationSettings
+2025-05-20 18:17:57.465 - Info	Processing Component: optionsets
+2025-05-20 18:17:57.465 - Info	Processing Component: CustomControls
+2025-05-20 18:17:57.469 - Info	 - EmailDataSetControlNS.EmailDataSetControl
+2025-05-20 18:17:57.479 - Info	Processing Component: SolutionPluginAssemblies
+2025-05-20 18:17:57.480 - Info	Processing Component: EntityDataProviders
+2025-05-20 18:17:57.486 - Info	Processing Sharded Component Files
+2025-05-20 18:17:57.746 - Info	
+Unmanaged Pack complete.
+

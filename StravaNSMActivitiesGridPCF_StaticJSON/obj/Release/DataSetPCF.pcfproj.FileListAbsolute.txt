@@ -1,0 +1,2 @@
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMActivitiesGridPCF_StaticJSON\obj\Release\DataSetPCF.pcfproj.AssemblyReference.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMActivitiesGridPCF_StaticJSON\obj\Release\DataSetPCF.pcfproj.CoreCompileInputs.cache
