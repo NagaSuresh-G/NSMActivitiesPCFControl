@@ -123,6 +123,8 @@ const buttonStyles: IButtonStyles = {
   label: { color: "inherit" },
 };
 
+
+
 const activityTypeOptions: IDropdownOption[] = [
   { key: "All", text: "All" },
   { key: "Email", text: "Email" },
@@ -282,114 +284,239 @@ export class ActivityDatasetControl extends React.Component<
     ];
   }
 
+  private getEntitySetName(entityName: string): string {
+    if (!entityName) return "";
+    return entityName.endsWith("y")
+      ? `${entityName.slice(0, -1)}ies`
+      : `${entityName}s`;
+  }
+
   private async restoreRecords(): Promise<void> {
 
-    alert("Restore functionality is not implemented yet.");
+    //alert("Restore functionality is not implemented yet.");
 
     //#region Functionality To Restore Records in CRM
-    // const { selectedItems } = this.state;
-    // const { context } = this.props;
+    const { selectedItems } = this.state;
+    const { context } = this.props;
 
-    // if (selectedItems.length === 0) {
-    //   this.setState({ errorMessage: "No records selected for restoration." });
-    //   return;
-    // }
+    if (selectedItems.length === 0) {
+      this.setState({ errorMessage: "No records selected for restoration." });
+      return;
+    }
 
-    // this.setState({ isLoading: true, errorMessage: null });
+    this.setState({ isLoading: true, errorMessage: null });
 
-    // try {
-    //   for (const record of selectedItems) {
-    //     let entityName: string;
-    //     let entityData: any = {
-    //       subject: record.subject,
-    //       regardingobjectid: record.regardingobjectid ? {
-    //         "@odata.id": `${record.regardingobjectid_entitytype}(${record.regardingobjectid})`
-    //       } : undefined,
-    //       createdon: record.createdon,
-    //       statuscode: record.status,
-    //       prioritycode: record.priority,
-    //       scheduledend: record.scheduledend,
-    //       ownerid: record.ownerid ? {
-    //         "@odata.id": `${record.ownerid_entitytype}(${record.ownerid})`
-    //       } : undefined,
-    //     };
+    try {
+      for (const record of selectedItems) {
+        let entityName: string;
+        let entityData: Record<string, unknown> = {
+          activityid: record.activityid,
+          subject: record.subject,
+        };
 
-    //     switch (record.activitytypecode) {
-    //       case "Email":
-    //         entityName = "email";
-    //         entityData = {
-    //           ...entityData,
-    //           description: record.description,
-    //           torecipients: record.torecipients,
-    //           from: record.from,
-    //           directioncode: record.directioncode === "true",
-    //         };
-    //         break;
-    //       case "Task":
-    //         entityName = "task";
-    //         entityData = {
-    //           ...entityData,
-    //           description: record.description,
-    //           strava_url: record.strava_url,
-    //           strava_contact: record.strava_contact,
-    //           strava_homenumber: record.strava_homenumber,
-    //           strava_mobile: record.strava_mobile,
-    //         };
-    //         break;
-    //       case "PhoneCall":
-    //         entityName = "phonecall";
-    //         entityData = {
-    //           ...entityData,
-    //           phonenumber: record.phonenumber,
-    //           directioncode: record.directioncode === "true",
-    //           new_phonecallreason: record.new_phonecallreason,
-    //           new_phonecalloutcome: record.new_phonecalloutcome,
-    //         };
-    //         break;
-    //       case "Appointment":
-    //         entityName = "appointment";
-    //         entityData = {
-    //           ...entityData,
-    //           scheduledstart: record.scheduledstart,
-    //           new_appttype: record.new_appttype,
-    //           new_apptmethod: record.new_apptmethod,
-    //           location: record.location,
-    //         };
-    //         break;
-    //       default:
-    //         throw new Error(`Unsupported activity type: ${record.activitytypecode}`);
-    //     }
+        switch (record.activitytypecode) {
+          case "Email": {
+            entityName = "email";
 
-    //     // Remove undefined or null values
-    //     Object.keys(entityData).forEach(key => 
-    //       (entityData[key] === undefined || entityData[key] === null) && delete entityData[key]
-    //     );
+            const activityParties: object[] = [];
 
-    //     // Create record using Web API
-    //     await context.webAPI.createRecord(entityName, entityData);
-    //   }
+            if (record.from && Array.isArray(record.from)) {
+              (record.from as IPartyList[]).forEach((sender) => {
+                if (sender.partyid && sender.entitytype) {
+                  const toSender = {
+                    [`partyid_${sender.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(sender.entitytype))}(${sender.partyid})`,
+                    participationtypemask: 1,
+                  };
+                  activityParties.push(toSender);
+                }
+              });
+            }
+            if (record.to && Array.isArray(record.to)) {
+              (record.to as IPartyList[]).forEach((recipient) => {
+                if (recipient.partyid && recipient.entitytype) {
+                  const toRecipient = {
+                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                    participationtypemask: 2,
+                  };
+                  activityParties.push(toRecipient);
+                }
+              });
+            }
+            if (record.cc && Array.isArray(record.cc)) {
+              (record.cc as IPartyList[]).forEach((recipient) => {
+                if (recipient.partyid && recipient.entitytype) {
+                  const ccRecipient = {
+                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                    participationtypemask: 3,
+                  };
+                  activityParties.push(ccRecipient);
+                }
+              });
+            }
+            if (record.bcc && Array.isArray(record.bcc)) {
+              (record.bcc as IPartyList[]).forEach((recipient) => {
+                if (recipient.partyid && recipient.entitytype) {
+                  const bccRecipient = {
+                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                    participationtypemask: 4,
+                  };
+                  activityParties.push(bccRecipient);
+                }
+              });
+            }
 
-    //   // Refresh the view after successful restoration
-    //   await this.updateView();
-    //   this.setState({
-    //     isLoading: false,
-    //     errorMessage: "Records restored successfully.",
-    //     selectedItems: [],
-    //   });
-    //   this._selection.setAllSelected(false);
+            entityData = {
+              ...entityData,
+              description: record.description,
+              directioncode: record.directioncode === "true",
+              ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
+                [`regardingobjectid_${record.regardingobjectid_entitytype}_email@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`
+              }),
+              ...(record.ownerid && record.ownerid_entitytype && {
+                ["ownerid_email@odata.bind"]: `/${record.ownerid_entitytype}s(${record.ownerid})`
+              }),
+              ...(activityParties.length > 0 && { email_activity_parties: activityParties }),
+            };
+            break;
+          }
+          case "Task":
+            entityName = "task";
+            entityData = {
+              ...entityData,
+              strava_url: record.strava_url,
+              strava_homenumber: record.strava_homenumber,
+              strava_mobile: record.strava_mobile,
+              strava_business: record.strava_business,
+              strava_businessdirect: record.strava_businessdirect,
+              strava_otherphone: record.strava_otherphone,
+              description: record.description,
+              new_taskpriority: 100000000,
+              new_teamassociation: 100000001,
+              actualdurationminutes: record.actualdurationminutes,
+              new_quoteboundindicator: true,
+              new_taskcategory: 100000001,
+              scheduledend: new Date("2025-05-21 11:33").toISOString(),
+              strava_connectedcallstatus: 791930000,
+              strava_createoutlookcalendarreminder: true,
+              strava_notecategory: 791930002,
+              strava_publishnote: true,
+              strava_note: record.strava_note,
+              statecode: 0,
+              statuscode: 3,
+              prioritycode: 2,
+              ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
+                [`regardingobjectid_${record.regardingobjectid_entitytype}_task@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`
+              }),
+              ...(record.ownerid && record.ownerid_entitytype && {
+                ["ownerid_task@odata.bind"]: `/${record.ownerid_entitytype}s(${record.ownerid})`
+              }),
+              ...(record.strava_contact && {
+                ["strava_Contact_Task@odata.bind"]: `/contacts(${record.strava_contact})`
+              }),
 
-    //   // Clear success message after 3 seconds
-    //   setTimeout(() => {
-    //     this.setState({ errorMessage: null });
-    //   }, 3000);
+            };
+            break;
+          case "PhoneCall": {
+            entityName = "phonecall";
 
-    // } catch (error) {
-    //   console.error("Error restoring records:", error);
-    //   this.setState({
-    //     isLoading: false,
-    //     errorMessage: `Failed to restore records: ${error instanceof Error ? error.message : "Unknown error"}`,
-    //   });
-    // }
+            const activityParties: object[] = [];
+            if (record.from && Array.isArray(record.from)) {
+              (record.from as IPartyList[]).forEach((sender) => {
+                if (sender.partyid && sender.entitytype) {
+                  const toSender = {
+                    [`partyid_${sender.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(sender.entitytype))}(${sender.partyid})`,
+                    participationtypemask: 1,
+                  };
+                  activityParties.push(toSender);
+                }
+              });
+            }
+            if (record.to && Array.isArray(record.to)) {
+              (record.to as IPartyList[]).forEach((recipient) => {
+                if (recipient.partyid && recipient.entitytype) {
+                  const toRecipient = {
+                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                    participationtypemask: 2,
+                  };
+                  activityParties.push(toRecipient);
+                }
+              });
+            }
+
+            entityData = {
+              ...entityData,
+              phonenumber: record.phonenumber,
+              new_phonecallreason: 100000000,
+              new_phonecalloutcome: 100000000,
+              strava_note: record.strava_note,
+              strava_notecategory: 791930002,
+              strava_publishnote: true,
+              description: record.description,
+              softphon_queuename: record.softphon_queuename,
+              softphon_queuetimeseconds: record.softphon_queuetimeseconds,
+              softphon_genesyscloudwrapupcode: record.softphon_genesyscloudwrapupcode,
+              softphon_ivrtimeseconds: record.softphon_ivrtimeseconds,
+              actualdurationminutes: record.actualdurationminutes,
+              softphon_durationseconds: record.softphon_durationseconds,
+              softphon_dispositiondurationseconds: record.softphon_dispositiondurationseconds,
+              softphon_interactionurl: record.softphon_interactionurl,
+              actualstart: new Date("2025-05-21").toISOString(),
+              actualend: new Date("2025-05-22").toISOString(),
+              directioncode: true,
+              ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
+                [`regardingobjectid_${record.regardingobjectid_entitytype}_phonecall@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`
+              }),
+              ...(record.ownerid && record.ownerid_entitytype && {
+                ["ownerid_phonecall@odata.bind"]: `/${record.ownerid_entitytype}s(${record.ownerid})`
+              }),
+              ...(activityParties.length > 0 && { phonecall_activity_parties: activityParties }),
+            };
+            break;
+          }
+          case "Appointment":
+            entityName = "appointment";
+            entityData = {
+              ...entityData,
+              scheduledstart: record.scheduledstart,
+              new_appttype: record.new_appttype,
+              new_apptmethod: record.new_apptmethod,
+              location: record.location,
+            };
+            break;
+          default:
+            throw new Error(`Unsupported activity type: ${record.activitytypecode}`);
+        }
+
+        // Remove undefined or null values
+        Object.keys(entityData).forEach(key =>
+          (entityData[key] === undefined || entityData[key] === null) && delete entityData[key]
+        );
+
+        // Create record using Web API
+        await context.webAPI.createRecord(entityName, entityData);
+      }
+
+      // Refresh the view after successful restoration
+      await this.updateView();
+      this.setState({
+        isLoading: false,
+        errorMessage: "Records restored successfully.",
+        selectedItems: [],
+      });
+      this._selection.setAllSelected(false);
+
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 3000);
+
+    } catch (error) {
+      console.error("Error restoring records:", error);
+      this.setState({
+        isLoading: false,
+        errorMessage: `Failed to restore records: ${error instanceof Error ? error.message : "Unknown error"}`,
+      });
+    }
     //#endregion
   }
 
@@ -699,9 +826,19 @@ export class ActivityDatasetControl extends React.Component<
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <PrimaryButton
               text="Restore"
+              iconProps={{ iconName: "Refresh" }}
               onClick={() => this.restoreRecords()}
               disabled={this.state.selectedItems.length === 0}
+
             />
+            {/* <DefaultButton
+                key="restore"
+                iconProps={{ iconName: "Contact" }}
+                text="Restore"
+                disabled={this.state.selectedItems.length === 0}
+                onClick={() => this.restoreRecords()}
+                styles={buttonStyles}
+              /> */}
             <TextField
               placeholder="Search..."
               value={searchQuery}
@@ -771,7 +908,7 @@ export class ActivityDatasetControl extends React.Component<
               directioncode: String(selectedRecord.directioncode || "N/A"),
               sendermailboxidname: String(selectedRecord.sendermailboxidname || "N/A"),
               torecipients: String(selectedRecord.torecipients || "N/A"),
-              from: String(selectedRecord.from || "N/A"),
+              from: Array.isArray(selectedRecord.from) ? selectedRecord.from as IPartyList[] : [],
               to: Array.isArray(selectedRecord.to) ? selectedRecord.to as IPartyList[] : [],
               cc: Array.isArray(selectedRecord.cc) ? selectedRecord.cc as IPartyList[] : [],
               bcc: Array.isArray(selectedRecord.bcc) ? selectedRecord.bcc as IPartyList[] : [],
@@ -836,9 +973,7 @@ export class ActivityDatasetControl extends React.Component<
               scheduledend: selectedRecord.scheduledend,
               activitytypecode: selectedRecord.activitytypecode as "PhoneCall",
               phonenumber: String(selectedRecord.phonenumber || ""),
-              from: String(selectedRecord.from || "N/A"),
-              from_entitytype: String(selectedRecord.from_entitytype || ""),
-              fromname: String(selectedRecord.fromname || ""),
+              from: Array.isArray(selectedRecord.from) ? selectedRecord.from as IPartyList[] : [],
               to: Array.isArray(selectedRecord.to) ? selectedRecord.to as IPartyList[] : [],
               to_entitytype: String(selectedRecord.to_entitytype || ""),
               toname: String(selectedRecord.toname || ""),

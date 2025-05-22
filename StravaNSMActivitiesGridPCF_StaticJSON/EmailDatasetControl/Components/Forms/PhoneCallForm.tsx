@@ -10,9 +10,7 @@ import * as React from "react";
 export interface IRecord {
     id: string;
     subject: string;
-    from: string;
-    fromname: string;
-    from_entitytype: string;
+    from: IPartyList[];
     to: IPartyList[];
     toname: string;
     to_entitytype: string;
@@ -215,16 +213,32 @@ const PhoneCallForm: React.FC<PhoneCallFormProps> = ({ data, onClose }) => {
                                         background: "##FFFFFF",
                                     }}
                                 >
-                                    <a
-                                        href="#"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            openCrmForm(data.from_entitytype, data.from);
-                                        }}
-                                        style={{ textDecoration: "underline", color: "#0078d4" }}
-                                    >
-                                        {data.fromname}
-                                    </a>
+                                    {data.from && data.from.length > 0 ? (
+                                        data.from.map((callfrom, index) => (
+                                            <React.Fragment key={callfrom.partyid}>
+                                                <a
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        openCrmForm(callfrom.entitytype, callfrom.partyid);
+                                                    }}
+                                                    style={{
+                                                        textDecoration: "underline",
+                                                        color: "#0078d4",
+                                                        marginRight: "4px",
+                                                    }}
+                                                    title={callfrom.name}
+                                                >
+                                                    {callfrom.name}
+                                                </a>
+                                                {index < data.from.length - 1 && (
+                                                    <span style={{ marginRight: "4px" }}>;</span>
+                                                )}
+                                            </React.Fragment>
+                                        ))
+                                    ) : (
+                                        <span style={{ color: "#666" }}>No recipients</span>
+                                    )}
                                 </div>
                             </div>
                             {/* <TextField label="Call To" readOnly value={data.toname} /> */}

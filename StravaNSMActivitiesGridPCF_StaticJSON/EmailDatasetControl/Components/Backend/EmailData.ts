@@ -13,7 +13,7 @@ export interface IPartyList {
 export interface IRecord {
     id: string;
     subject: string;
-    from: string;
+    from:IPartyList[];
     sendermailboxidname: string;
     to: IPartyList[];
     torecipients: string;
@@ -41,6 +41,7 @@ export interface IRecord {
 export const emailData: IRecord[] = [
     {
         id: "DA171177-E140-EC11-8C62-000D3A57FAA2",
+        activityid: "d5b4a1b2-de4f-4f86-8768-b0730001e7d1",
         statecode: 1,
         status: "Draft",
         statuscode: 3,
@@ -62,26 +63,27 @@ export const emailData: IRecord[] = [
         sendermailboxid_entitytype: "mailbox",
         ownerid: "b9ea5e33-6e4e-ea11-a812-000d3a579c86",
         ownerid_entitytype: "team",
-        from: "e2fe7e1e-5253-ea11-a816-000d3a579c8c",
+        from: [
+            { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" }
+        ],
         to: [
             { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
         ],
-        cc:[
+        cc: [
             { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
         ],
-        bcc:[
+        bcc: [
             { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
         ],
-        activityid: "DA171177-E140-EC11-8C62-000D3A57FAA2",
         activitytypecode: "email",
         attachmentcount: 3,
-        createdon: "5/12/2025, 2:30:00 PM",
+        createdon: "2025/01/25, 2:30:00 PM",
         descriptionblobid: "5d2a4f8a-7300-ee11-8f6e-000d3a9bc0c0",
         descriptionblobid_name: "Untitled.txt",
         messageid: "<8161F631BFF74F03A89D12A2C1DB453F1D7D4EE40FBB@JANICE.J.AMERICANCOLLECTORS.COM>",
@@ -143,6 +145,7 @@ export const emailData: IRecord[] = [
     },
     {
         id: "DA171177-E140-EC11-8C62-000D3A57FAA2",
+        activityid: "d5b4a1b2-de4f-4f86-8768-b0730001e7d1",
         statecode: 1,
         status: "Draft",
         statuscode: 3,
@@ -164,26 +167,27 @@ export const emailData: IRecord[] = [
         sendermailboxid_entitytype: "mailbox",
         ownerid: "b9ea5e33-6e4e-ea11-a812-000d3a579c86",
         ownerid_entitytype: "team",
-        from: "e2fe7e1e-5253-ea11-a816-000d3a579c8c",
-         to: [
-            { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+        from: [
+            { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" }
         ],
-        cc:[
+        to: [
             { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
         ],
-        bcc:[
+        cc: [
             { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
         ],
-        activityid: "DA171177-E140-EC11-8C62-000D3A57FAA2",
+        bcc: [
+            { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
+        ],
         activitytypecode: "email",
         attachmentcount: 3,
-        createdon: "5/12/2025, 2:30:00 AM",
+        createdon: "2025/12/25, 2:30:00 AM",
         descriptionblobid: "5d2a4f8a-7300-ee11-8f6e-000d3a9bc0c0",
         descriptionblobid_name: "Untitled.txt",
         messageid: "<8161F631BFF74F03A89D12A2C1DB453F1D7D4EE40FBB@JANICE.J.AMERICANCOLLECTORS.COM>",
@@ -245,6 +249,7 @@ export const emailData: IRecord[] = [
     },
     {
         id: "DA171177-E140-EC11-8C62-000D3A57FAA2",
+        activityid: "d5b4a1b2-de4f-4f86-8768-b0730001e7d1",
         statecode: 1,
         status: "Draft",
         statuscode: 3,
@@ -266,27 +271,28 @@ export const emailData: IRecord[] = [
         sendermailboxid_entitytype: "mailbox",
         ownerid: "b9ea5e33-6e4e-ea11-a812-000d3a579c86",
         ownerid_entitytype: "team",
-        from: "e2fe7e1e-5253-ea11-a816-000d3a579c8c",
-         to: [
-            { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+        from: [
+            { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" }
         ],
-        cc:[
+        to: [
             { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
         ],
-        bcc:[
+        cc: [
             { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
-            { partyid: "17372dce-4a83-ee11-8179-000d3a9bc712", name: "SMITH", entitytype: "account" },
-            { partyid: "d436c7fb-9e9e-ef11-8a6a-6045bdda0302", name: "AARON ABEL", entitytype: "contact" }
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
         ],
-        activityid: "DA171177-E140-EC11-8C62-000D3A57FAA2",
+        bcc: [
+            { partyid: "e2fe7e1e-5253-ea11-a816-000d3a579c8c", name: "Paul Choi", entitytype: "systemuser" },
+            { partyid: "f60407dd-9bd6-ea11-a813-000d3a1bb158", name: "MARCIA JOHNSON", entitytype: "contact" },
+            { partyid: "ede79e36-ced5-ea11-a813-000d3a1bb158", name: "MICHAEL FAULK", entitytype: "contact" }
+        ],
         activitytypecode: "email",
         attachmentcount: 3,
         createdbyyominame: "Janice Johnt",
-        createdon: "22/12/2025, 2:30:00 PM",
+        createdon: "2025/09/11, 2:30:00 PM",
         descriptionblobid: "5d2a4f8a-7300-ee11-8f6e-000d3a9bc0c0",
         descriptionblobid_name: "Untitled.txt",
         messageid: "<8161F631BFF74F03A89D12A2C1DB453F1D7D4EE40FBB@JANICE.J.AMERICANCOLLECTORS.COM>",

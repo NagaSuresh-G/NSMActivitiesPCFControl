@@ -37,7 +37,7 @@ export interface IRecord {
     subject: string;
     createdon: string;
     directioncode: string;
-    from: string;
+    from: IPartyList[];
     sendermailboxidname: string;
     to: IPartyList[];
     torecipients: string;
@@ -190,24 +190,41 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                             <div
                                 style={{
                                     padding: "6px 12px",
-                                    height: "18px",
+                                    minHeight: "18px",
                                     display: "flex",
                                     alignItems: "center",
                                     border: "1px solid black",
                                     borderRadius: "2px",
                                     background: "#FFFFFF",
+                                    flexWrap: "wrap",
                                 }}
                             >
-                                <a
-                                    href="#"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        openCrmForm("systemuser", data.from);
-                                    }}
-                                    style={{ textDecoration: "underline", color: "#0078d4" }}
-                                >
-                                    {data.sendermailboxidname}
-                                </a>
+                                {data.from && data.from.length > 0 ? (
+                                    data.from.map((sender, index) => (
+                                        <React.Fragment key={sender.partyid}>
+                                            <a
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    openCrmForm(sender.entitytype, sender.partyid);
+                                                }}
+                                                style={{
+                                                    textDecoration: "underline",
+                                                    color: "#0078d4",
+                                                    marginRight: "4px",
+                                                }}
+                                                title={sender.name}
+                                            >
+                                                {sender.name}
+                                            </a>
+                                            {index < data.from.length - 1 && (
+                                                <span style={{ marginRight: "4px" }}>;</span>
+                                            )}
+                                        </React.Fragment>
+                                    ))
+                                ) : (
+                                    <span style={{ color: "#666" }}>No recipients</span>
+                                )}
                             </div>
                         </div>
                         <div style={{ marginBottom: 12 }}>
