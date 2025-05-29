@@ -1,0 +1,4 @@
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMActivitiesGridPCF_StaticJSON\EmailPCFControl\obj\Debug\EmailPCFControl.cdsproj.AssemblyReference.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMActivitiesGridPCF_StaticJSON\EmailPCFControl\obj\Debug\EmailPCFControl.cdsproj.CoreCompileInputs.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMEmailsGridPCF_StaticJSON\emailpcfcontrol\obj\Debug\EmailPCFControl.cdsproj.AssemblyReference.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMEmailsGridPCF_StaticJSON\emailpcfcontrol\obj\Debug\EmailPCFControl.cdsproj.CoreCompileInputs.cache
