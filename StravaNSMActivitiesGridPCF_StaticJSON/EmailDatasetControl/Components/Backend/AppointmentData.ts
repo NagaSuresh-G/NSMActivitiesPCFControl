@@ -94,32 +94,14 @@ export const appointmentData: IRecord[] = [
             },
             {
                 attachmentId: "attach-2",
-                body: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA" +
-                    "AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO" +
-                    "9TXL0Y4OHwAAAABJRU5ErkJggg==", // Base64 for a small red PNG image
+                body: "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==", // Base64 for a small red PNG image
                 filename: "red_dot.png",
                 filesize: 85, // Approximate size in bytes
                 mimetype: "image/png",
             },
             {
                 attachmentId: "attach-3",
-                body: "JVBERi0xLjAKJcKlwrHDqSAKMCAwIG9iago8PCAKL0xlbmd0aCAzIDAgUgog" +
-                    "L0ZpbHRlciAvRmxhdGVEZWNvZGUgCj4+CnN0cmVhbQp4nOPTwU7DMAwA0P2" +
-                    "f4gkwM7zQEC8CQrYg2SIIkM5G2gqB7qOQ0fT7v2uS7S4gAEAJ5yE4Cnd5fQA" +
-                    "AAA1lbmRzdHJlYW0KZW5kb2JqCgozIDAgb2JqCjExMwplbmRvYmoKCjIgMC" +
-                    "BvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAxIDAgUgovUmVzb3VyY2VzID" +
-                    "QgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKL" +
-                    "1Byb2NTZXQgWy9QREYgL1RleHQgXQovRm9udCA8PAovRjEgNSAwIFIKPj4K" +
-                    "Pj4KZW5kb2JqCgo1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9" +
-                    "UeXBlMQovQmFzZUZvbnQgL0hlbHZldGljYQovRW5jb2RpbmcgL1dpbkFuc2" +
-                    "lFbmNvZGluZwo+PgplbmRvYmoKCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzC" +
-                    "i9LaWRzIFsyIDAgUl0KL0NvdW50IDEKpj4+CmVuZG9iagoKOCAwIG9iago8" +
-                    "PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMSAwIFIKpj4+CmVuZG9iagoKeHJ" +
-                    "lZgo4IDgKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNzEyIDAwMDAwIG" +
-                    "4gCjAwMDAwMDA0MzEgMDAwMDAgbiAKMDAwMDAwMDI3OCAwMDAwMCBuIAowM" +
-                    "DAwMDAwNTY4IDAwMDAwIG4gCjAwMDAwMDA2MzMgMDAwMDAgbiAKMDAwMDAw" +
-                    "MDAwMCAwMDAwMCBuIAowMDAwMDAwNzk0IDAwMDAwIG4gCnRyYWlsZXIKPDw" +
-                    "KL1NpemUgOAovUm9vdCA4IDAgUgo+PiAKc3RhcnR4cmVmCjkwNgoiJEOFxg", // Base64 for a minimal PDF
+                body: "JVBERi0xLjAKJcKlwrHDqSAKMCAwIG9iago8PCAKL0xlbmd0aCAzIDAgUgovRmlsdGVyIC9GbGF0ZURlY29kZSA+PnN0cmVhbQp4nOPTwU7DMAwA0P2f4gkwM7zQEC8CQrYg2SIIkM5G2gqB7qOQ0fT7v2uS7S4gAEAJ5yE4Cnd5fQAAAA1lbmRzdHJlYW0KZW5kb2JqCgozIDAgb2JqCjExMwplbmRvYmoKCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAxIDAgUgovUmVzb3VyY2VzIDQgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKL1Byb2NTZXQgWy9QREYgL1RleHQgXQovRm9udCA8PAovRjEgNSAwIFIKPj4KPj4KZW5kb2JqCgo1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9UeXBlMQovQmFzZUZvbnQgL0hlbHZldGljYQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFsyIDAgUl0KL0NvdW50IDEKpj4+CmVuZG9iagoKOCAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMSAwIFIKpj4+CmVuZG9iagoKeHJlZgo4IDgKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNzEyIDAwMDAwIG4gCjAwMDAwMDA0MzEgMDAwMDAgbiAKMDAwMDAwMDI3OCAwMDAwMCBuIAowMDAwMDAwNTY4IDAwMDAwIG4gCjAwMDAwMDA2MzMgMDAwMDAgbiAKMDAwMDAwMDAwMCAwMDAwMCBuIAowMDAwMDAwNzk0IDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgOAovUm9vdCA4IDAgUgo+PiAKc3RhcnR4cmVmCjkwNgoiJEOFxg==", // Base64 for a minimal PDF
                 filename: "sample.pdf",
                 filesize: 906, // Size in bytes
                 mimetype: "application/pdf",
@@ -189,32 +171,14 @@ export const appointmentData: IRecord[] = [
             },
             {
                 attachmentId: "attach-2",
-                body: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA" +
-                    "AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO" +
-                    "9TXL0Y4OHwAAAABJRU5ErkJggg==", // Base64 for a small red PNG image
+                body: "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==", // Base64 for a small red PNG image
                 filename: "red_dot.png",
                 filesize: 85, // Approximate size in bytes
                 mimetype: "image/png",
             },
             {
                 attachmentId: "attach-3",
-                body: "JVBERi0xLjAKJcKlwrHDqSAKMCAwIG9iago8PCAKL0xlbmd0aCAzIDAgUgog" +
-                    "L0ZpbHRlciAvRmxhdGVEZWNvZGUgCj4+CnN0cmVhbQp4nOPTwU7DMAwA0P2" +
-                    "f4gkwM7zQEC8CQrYg2SIIkM5G2gqB7qOQ0fT7v2uS7S4gAEAJ5yE4Cnd5fQA" +
-                    "AAA1lbmRzdHJlYW0KZW5kb2JqCgozIDAgb2JqCjExMwplbmRvYmoKCjIgMC" +
-                    "BvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAxIDAgUgovUmVzb3VyY2VzID" +
-                    "QgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKL" +
-                    "1Byb2NTZXQgWy9QREYgL1RleHQgXQovRm9udCA8PAovRjEgNSAwIFIKPj4K" +
-                    "Pj4KZW5kb2JqCgo1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9" +
-                    "UeXBlMQovQmFzZUZvbnQgL0hlbHZldGljYQovRW5jb2RpbmcgL1dpbkFuc2" +
-                    "lFbmNvZGluZwo+PgplbmRvYmoKCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzC" +
-                    "i9LaWRzIFsyIDAgUl0KL0NvdW50IDEKpj4+CmVuZG9iagoKOCAwIG9iago8" +
-                    "PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMSAwIFIKpj4+CmVuZG9iagoKeHJ" +
-                    "lZgo4IDgKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNzEyIDAwMDAwIG" +
-                    "4gCjAwMDAwMDA0MzEgMDAwMDAgbiAKMDAwMDAwMDI3OCAwMDAwMCBuIAowM" +
-                    "DAwMDAwNTY4IDAwMDAwIG4gCjAwMDAwMDA2MzMgMDAwMDAgbiAKMDAwMDAw" +
-                    "MDAwMCAwMDAwMCBuIAowMDAwMDAwNzk0IDAwMDAwIG4gCnRyYWlsZXIKPDw" +
-                    "KL1NpemUgOAovUm9vdCA4IDAgUgo+PiAKc3RhcnR4cmVmCjkwNgoiJEOFxg", // Base64 for a minimal PDF
+                body: "JVBERi0xLjAKJcKlwrHDqSAKMCAwIG9iago8PCAKL0xlbmd0aCAzIDAgUgovRmlsdGVyIC9GbGF0ZURlY29kZSA+PnN0cmVhbQp4nOPTwU7DMAwA0P2f4gkwM7zQEC8CQrYg2SIIkM5G2gqB7qOQ0fT7v2uS7S4gAEAJ5yE4Cnd5fQAAAA1lbmRzdHJlYW0KZW5kb2JqCgozIDAgb2JqCjExMwplbmRvYmoKCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAxIDAgUgovUmVzb3VyY2VzIDQgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKL1Byb2NTZXQgWy9QREYgL1RleHQgXQovRm9udCA8PAovRjEgNSAwIFIKPj4KPj4KZW5kb2JqCgo1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9UeXBlMQovQmFzZUZvbnQgL0hlbHZldGljYQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFsyIDAgUl0KL0NvdW50IDEKpj4+CmVuZG9iagoKOCAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMSAwIFIKpj4+CmVuZG9iagoKeHJlZgo4IDgKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNzEyIDAwMDAwIG4gCjAwMDAwMDA0MzEgMDAwMDAgbiAKMDAwMDAwMDI3OCAwMDAwMCBuIAowMDAwMDAwNTY4IDAwMDAwIG4gCjAwMDAwMDA2MzMgMDAwMDAgbiAKMDAwMDAwMDAwMCAwMDAwMCBuIAowMDAwMDAwNzk0IDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgOAovUm9vdCA4IDAgUgo+PiAKc3RhcnR4cmVmCjkwNgoiJEOFxg==", // Base64 for a minimal PDF
                 filename: "sample.pdf",
                 filesize: 906, // Size in bytes
                 mimetype: "application/pdf",
@@ -284,32 +248,14 @@ export const appointmentData: IRecord[] = [
             },
             {
                 attachmentId: "attach-2",
-                body: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA" +
-                    "AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO" +
-                    "9TXL0Y4OHwAAAABJRU5ErkJggg==", // Base64 for a small red PNG image
+                body: "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==", // Base64 for a small red PNG image
                 filename: "red_dot.png",
                 filesize: 85, // Approximate size in bytes
                 mimetype: "image/png",
             },
             {
                 attachmentId: "attach-3",
-                body: "JVBERi0xLjAKJcKlwrHDqSAKMCAwIG9iago8PCAKL0xlbmd0aCAzIDAgUgog" +
-                    "L0ZpbHRlciAvRmxhdGVEZWNvZGUgCj4+CnN0cmVhbQp4nOPTwU7DMAwA0P2" +
-                    "f4gkwM7zQEC8CQrYg2SIIkM5G2gqB7qOQ0fT7v2uS7S4gAEAJ5yE4Cnd5fQA" +
-                    "AAA1lbmRzdHJlYW0KZW5kb2JqCgozIDAgb2JqCjExMwplbmRvYmoKCjIgMC" +
-                    "BvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAxIDAgUgovUmVzb3VyY2VzID" +
-                    "QgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKL" +
-                    "1Byb2NTZXQgWy9QREYgL1RleHQgXQovRm9udCA8PAovRjEgNSAwIFIKPj4K" +
-                    "Pj4KZW5kb2JqCgo1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9" +
-                    "UeXBlMQovQmFzZUZvbnQgL0hlbHZldGljYQovRW5jb2RpbmcgL1dpbkFuc2" +
-                    "lFbmNvZGluZwo+PgplbmRvYmoKCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzC" +
-                    "i9LaWRzIFsyIDAgUl0KL0NvdW50IDEKpj4+CmVuZG9iagoKOCAwIG9iago8" +
-                    "PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMSAwIFIKpj4+CmVuZG9iagoKeHJ" +
-                    "lZgo4IDgKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNzEyIDAwMDAwIG" +
-                    "4gCjAwMDAwMDA0MzEgMDAwMDAgbiAKMDAwMDAwMDI3OCAwMDAwMCBuIAowM" +
-                    "DAwMDAwNTY4IDAwMDAwIG4gCjAwMDAwMDA2MzMgMDAwMDAgbiAKMDAwMDAw" +
-                    "MDAwMCAwMDAwMCBuIAowMDAwMDAwNzk0IDAwMDAwIG4gCnRyYWlsZXIKPDw" +
-                    "KL1NpemUgOAovUm9vdCA4IDAgUgo+PiAKc3RhcnR4cmVmCjkwNgoiJEOFxg", // Base64 for a minimal PDF
+                body: "JVBERi0xLjAKJcKlwrHDqSAKMCAwIG9iago8PCAKL0xlbmd0aCAzIDAgUgovRmlsdGVyIC9GbGF0ZURlY29kZSA+PnN0cmVhbQp4nOPTwU7DMAwA0P2f4gkwM7zQEC8CQrYg2SIIkM5G2gqB7qOQ0fT7v2uS7S4gAEAJ5yE4Cnd5fQAAAA1lbmRzdHJlYW0KZW5kb2JqCgozIDAgb2JqCjExMwplbmRvYmoKCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAxIDAgUgovUmVzb3VyY2VzIDQgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKL1Byb2NTZXQgWy9QREYgL1RleHQgXQovRm9udCA8PAovRjEgNSAwIFIKPj4KPj4KZW5kb2JqCgo1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9UeXBlMQovQmFzZUZvbnQgL0hlbHZldGljYQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFsyIDAgUl0KL0NvdW50IDEKpj4+CmVuZG9iagoKOCAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMSAwIFIKpj4+CmVuZG9iagoKeHJlZgo4IDgKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNzEyIDAwMDAwIG4gCjAwMDAwMDA0MzEgMDAwMDAgbiAKMDAwMDAwMDI3OCAwMDAwMCBuIAowMDAwMDAwNTY4IDAwMDAwIG4gCjAwMDAwMDA2MzMgMDAwMDAgbiAKMDAwMDAwMDAwMCAwMDAwMCBuIAowMDAwMDAwNzk0IDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgOAovUm9vdCA4IDAgUgo+PiAKc3RhcnR4cmVmCjkwNgoiJEOFxg==", // Base64 for a minimal PDF
                 filename: "sample.pdf",
                 filesize: 906, // Size in bytes
                 mimetype: "application/pdf",

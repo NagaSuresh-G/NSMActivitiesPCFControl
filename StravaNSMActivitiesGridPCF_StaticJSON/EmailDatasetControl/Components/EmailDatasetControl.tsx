@@ -64,6 +64,7 @@ export interface IActivityDatasetControlState {
   filteredItems: IRecord[];
   columns: IColumn[];
   selectedItems: IRecord[];
+  selectedIds: string[];
   searchQuery: string;
   activityTypeFilter: string;
   isEmailFormOpen: boolean;
@@ -147,6 +148,7 @@ export class ActivityDatasetControl extends React.Component<
       filteredItems: [],
       columns: this.getColumns(),
       selectedItems: [],
+      selectedIds: [],
       searchQuery: "",
       activityTypeFilter: "All",
       isEmailFormOpen: false,
@@ -163,11 +165,18 @@ export class ActivityDatasetControl extends React.Component<
     };
 
     this._selection = new Selection({
-      onSelectionChanged: () => {
-        this.setState({ selectedItems: this._selection.getSelection() as IRecord[] });
-      },
+      onSelectionChanged: this.onSelectionChanged,
+      selectionMode: 2, // multiple
     });
   }
+
+  onSelectionChanged = () => {
+    const selectedItems = this._selection.getSelection() as IRecord[];
+    this.setState({
+      selectedItems,
+      selectedIds: selectedItems.map((item) => item.id),
+    });
+  };
 
   private getColumns(): IColumn[] {
     return [
@@ -293,9 +302,6 @@ export class ActivityDatasetControl extends React.Component<
 
   private async restoreRecords(): Promise<void> {
 
-    //alert("Restore functionality is not implemented yet.");
-
-    //#region Functionality To Restore Records in CRM
     const { selectedItems } = this.state;
     const { context } = this.props;
 
@@ -306,219 +312,348 @@ export class ActivityDatasetControl extends React.Component<
 
     this.setState({ isLoading: true, errorMessage: null });
 
+    // Array to store errors for each record
+    const errors: { recordId: string; subject: string; errorMessage: string }[] = [];
+    let successfulRestorations = 0;
+
     try {
       for (const record of selectedItems) {
-        let entityName: string;
-        let entityData: Record<string, unknown> = {
-          activityid: record.activityid,
-          subject: record.subject,
-        };
+        try {
+          let entityName: string;
+          let entityData: Record<string, unknown> = {
+            activityid: record.activityid, // Use 'id' from IRecord
+            subject: record.subject,
+          };
 
-        switch (record.activitytypecode) {
-          case "Email": {
-            entityName = "email";
+          switch (record.activitytypecode) {
+            case "Email": {
+              entityName = "email";
 
-            const activityParties: object[] = [];
+              const activityParties: object[] = [];
 
-            if (record.from && Array.isArray(record.from)) {
-              (record.from as IPartyList[]).forEach((sender) => {
-                if (sender.partyid && sender.entitytype) {
-                  const toSender = {
-                    [`partyid_${sender.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(sender.entitytype))}(${sender.partyid})`,
-                    participationtypemask: 1,
-                  };
-                  activityParties.push(toSender);
-                }
-              });
-            }
-            if (record.to && Array.isArray(record.to)) {
-              (record.to as IPartyList[]).forEach((recipient) => {
-                if (recipient.partyid && recipient.entitytype) {
-                  const toRecipient = {
-                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
-                    participationtypemask: 2,
-                  };
-                  activityParties.push(toRecipient);
-                }
-              });
-            }
-            if (record.cc && Array.isArray(record.cc)) {
-              (record.cc as IPartyList[]).forEach((recipient) => {
-                if (recipient.partyid && recipient.entitytype) {
-                  const ccRecipient = {
-                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
-                    participationtypemask: 3,
-                  };
-                  activityParties.push(ccRecipient);
-                }
-              });
-            }
-            if (record.bcc && Array.isArray(record.bcc)) {
-              (record.bcc as IPartyList[]).forEach((recipient) => {
-                if (recipient.partyid && recipient.entitytype) {
-                  const bccRecipient = {
-                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
-                    participationtypemask: 4,
-                  };
-                  activityParties.push(bccRecipient);
-                }
-              });
-            }
+              if (record.from && Array.isArray(record.from)) {
+                (record.from as IPartyList[]).forEach((sender) => {
+                  if (sender.partyid && sender.entitytype) {
+                    const toSender = {
+                      [`partyid_${sender.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(sender.entitytype))}(${sender.partyid})`,
+                      participationtypemask: 1,
+                    };
+                    activityParties.push(toSender);
+                  }
+                });
+              }
+              if (record.to && Array.isArray(record.to)) {
+                (record.to as IPartyList[]).forEach((recipient) => {
+                  if (recipient.partyid && recipient.entitytype) {
+                    const toRecipient = {
+                      [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                      participationtypemask: 2,
+                    };
+                    activityParties.push(toRecipient);
+                  }
+                });
+              }
+              if (record.cc && Array.isArray(record.cc)) {
+                (record.cc as IPartyList[]).forEach((recipient) => {
+                  if (recipient.partyid && recipient.entitytype) {
+                    const ccRecipient = {
+                      [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                      participationtypemask: 3,
+                    };
+                    activityParties.push(ccRecipient);
+                  }
+                });
+              }
+              if (record.bcc && Array.isArray(record.bcc)) {
+                (record.bcc as IPartyList[]).forEach((recipient) => {
+                  if (recipient.partyid && recipient.entitytype) {
+                    const bccRecipient = {
+                      [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                      participationtypemask: 4,
+                    };
+                    activityParties.push(bccRecipient);
+                  }
+                });
+              }
 
-            entityData = {
-              ...entityData,
-              description: record.description,
-              directioncode: record.directioncode === "true",
-              ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
-                [`regardingobjectid_${record.regardingobjectid_entitytype}_email@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`
-              }),
-              ...(record.ownerid && record.ownerid_entitytype && {
-                ["ownerid_email@odata.bind"]: `/${record.ownerid_entitytype}s(${record.ownerid})`
-              }),
-              ...(activityParties.length > 0 && { email_activity_parties: activityParties }),
-            };
-            break;
+              entityData = {
+                ...entityData,
+                description: record.description,
+                directioncode: true,
+                ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
+                  [`regardingobjectid_${record.regardingobjectid_entitytype}_email@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`,
+                }),
+                ...(record.ownerid && record.ownerid_entitytype && {
+                  ["ownerid_email@odata.bind"]: `/${this.getEntitySetName(String(record.ownerid_entitytype))}(${record.ownerid})`,
+                }),
+                ...(activityParties.length > 0 && { email_activity_parties: activityParties }),
+              };
+              break;
+            }
+            case "Task": {
+              entityName = "task";
+              entityData = {
+                ...entityData,
+                strava_url: record.strava_url,
+                strava_homenumber: record.strava_homenumber,
+                strava_mobile: record.strava_mobile,
+                strava_business: record.strava_business,
+                strava_businessdirect: record.strava_businessdirect,
+                strava_otherphone: record.strava_otherphone,
+                description: record.description,
+                new_taskpriority: 100000000,
+                new_teamassociation: 100000001,
+                actualdurationminutes: record.actualdurationminutes,
+                new_quoteboundindicator: true,
+                new_taskcategory: 100000001,
+                scheduledend: new Date("2025-05-21 11:33").toISOString(),
+                strava_connectedcallstatus: 791930000,
+                strava_createoutlookcalendarreminder: true,
+                strava_notecategory: 791930002,
+                strava_publishnote: true,
+                strava_note: record.strava_note,
+                statecode: 0,
+                statuscode: 3,
+                prioritycode: 2,
+                ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
+                  [`regardingobjectid_${record.regardingobjectid_entitytype}_task@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`,
+                }),
+                ...(record.ownerid && record.ownerid_entitytype && {
+                  ["ownerid_task@odata.bind"]: `/${this.getEntitySetName(String(record.ownerid_entitytype))}(${record.ownerid})`,
+                }),
+                ...(record.strava_contact && {
+                  ["strava_Contact_Task@odata.bind"]: `/contacts(${record.strava_contact})`,
+                }),
+              };
+              break;
+            }
+            case "PhoneCall": {
+              entityName = "phonecall";
+
+              const activityParties: object[] = [];
+              if (record.from && Array.isArray(record.from)) {
+                (record.from as IPartyList[]).forEach((sender) => {
+                  if (sender.partyid && sender.entitytype) {
+                    const toSender = {
+                      [`partyid_${sender.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(sender.entitytype))}(${sender.partyid})`,
+                      participationtypemask: 1,
+                    };
+                    activityParties.push(toSender);
+                  }
+                });
+              }
+              if (record.to && Array.isArray(record.to)) {
+                (record.to as IPartyList[]).forEach((recipient) => {
+                  if (recipient.partyid && recipient.entitytype) {
+                    const toRecipient = {
+                      [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
+                      participationtypemask: 2,
+                    };
+                    activityParties.push(toRecipient);
+                  }
+                });
+              }
+
+              entityData = {
+                ...entityData,
+                phonenumber: record.phonenumber,
+                new_phonecallreason: 100000000,
+                new_phonecalloutcome: 100000000,
+                strava_note: record.strava_note,
+                strava_notecategory: 791930002,
+                strava_publishnote: true,
+                description: record.description,
+                softphon_queuename: record.softphon_queuename,
+                softphon_queuetimeseconds: record.softphon_queuetimeseconds,
+                softphon_genesyscloudwrapupcode: record.softphon_genesyscloudwrapupcode,
+                softphon_ivrtimeseconds: record.softphon_ivrtimeseconds,
+                actualdurationminutes: record.actualdurationminutes,
+                softphon_durationseconds: record.softphon_durationseconds,
+                softphon_dispositiondurationseconds: record.softphon_dispositiondurationseconds,
+                softphon_interactionurl: record.softphon_interactionurl,
+                actualstart: new Date("2025-05-21").toISOString(),
+                actualend: new Date("2025-05-22").toISOString(),
+                directioncode: true,
+                ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
+                  [`regardingobjectid_${record.regardingobjectid_entitytype}_phonecall@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`,
+                }),
+                ...(record.ownerid && record.ownerid_entitytype && {
+                  ["ownerid_phonecall@odata.bind"]: `/${this.getEntitySetName(String(record.ownerid_entitytype))}(${record.ownerid})`,
+                }),
+                ...(activityParties.length > 0 && { phonecall_activity_parties: activityParties }),
+              };
+              break;
+            }
+            case "Appointment": {
+              entityName = "appointment";
+
+              const activityParties: object[] = [];
+              if (record.requiredattendees && Array.isArray(record.requiredattendees)) {
+                (record.requiredattendees as IPartyList[]).forEach((required) => {
+                  if (required.partyid && required.entitytype) {
+                    const requiredA = {
+                      [`partyid_${required.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(required.entitytype))}(${required.partyid})`,
+                      participationtypemask: 1,
+                    };
+                    activityParties.push(requiredA);
+                  }
+                });
+              }
+              if (record.optionalattendees && Array.isArray(record.optionalattendees)) {
+                (record.optionalattendees as IPartyList[]).forEach((optional) => {
+                  if (optional.partyid && optional.entitytype) {
+                    const optionalA = {
+                      [`partyid_${optional.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(optional.entitytype))}(${optional.partyid})`,
+                      participationtypemask: 2,
+                    };
+                    activityParties.push(optionalA);
+                  }
+                });
+              }
+
+              entityData = {
+                ...entityData,
+                location: record.location,
+                new_appttype: 100000006,
+                new_apptmethod: 100000003,
+                new_appointmentoutcome: 100000000,
+                strava_businessdirect: record.strava_businessdirect,
+                overriddencreatedon: new Date("2025-05-21").toISOString(),
+                strava_homenumber: record.strava_homenumber,
+                strava_mobile: record.strava_mobile,
+                strava_business: record.strava_business,
+                strava_otherphone: record.strava_otherphone,
+                isonlinemeeting: true,
+                description: record.description,
+                strava_notecategory: 791930005,
+                strava_publishnote: true,
+                strava_note: record.strava_note,
+                scheduledstart: new Date("2025-05-21 11:33").toISOString(),
+                scheduledend: new Date("2025-05-21 12:33").toISOString(),
+                isalldayevent: false,
+                prioritycode: 1,
+                scheduleddurationminutes: record.scheduleddurationminutes,
+                ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
+                  [`regardingobjectid_${record.regardingobjectid_entitytype}_appointment@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`,
+                }),
+                ...(record.ownerid && record.ownerid_entitytype && {
+                  ["ownerid_appointment@odata.bind"]: `/${this.getEntitySetName(String(record.ownerid_entitytype))}(${record.ownerid})`,
+                }),
+                ...(activityParties.length > 0 && { appointment_activity_parties: activityParties }),
+              };
+              break;
+            }
+            default:
+              throw new Error(`Unsupported activity type: ${record.activitytypecode}`);
           }
-          case "Task":
-            entityName = "task";
-            entityData = {
-              ...entityData,
-              strava_url: record.strava_url,
-              strava_homenumber: record.strava_homenumber,
-              strava_mobile: record.strava_mobile,
-              strava_business: record.strava_business,
-              strava_businessdirect: record.strava_businessdirect,
-              strava_otherphone: record.strava_otherphone,
-              description: record.description,
-              new_taskpriority: 100000000,
-              new_teamassociation: 100000001,
-              actualdurationminutes: record.actualdurationminutes,
-              new_quoteboundindicator: true,
-              new_taskcategory: 100000001,
-              scheduledend: new Date("2025-05-21 11:33").toISOString(),
-              strava_connectedcallstatus: 791930000,
-              strava_createoutlookcalendarreminder: true,
-              strava_notecategory: 791930002,
-              strava_publishnote: true,
-              strava_note: record.strava_note,
-              statecode: 0,
-              statuscode: 3,
-              prioritycode: 2,
-              ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
-                [`regardingobjectid_${record.regardingobjectid_entitytype}_task@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`
-              }),
-              ...(record.ownerid && record.ownerid_entitytype && {
-                ["ownerid_task@odata.bind"]: `/${record.ownerid_entitytype}s(${record.ownerid})`
-              }),
-              ...(record.strava_contact && {
-                ["strava_Contact_Task@odata.bind"]: `/contacts(${record.strava_contact})`
-              }),
 
-            };
-            break;
-          case "PhoneCall": {
-            entityName = "phonecall";
-
-            const activityParties: object[] = [];
-            if (record.from && Array.isArray(record.from)) {
-              (record.from as IPartyList[]).forEach((sender) => {
-                if (sender.partyid && sender.entitytype) {
-                  const toSender = {
-                    [`partyid_${sender.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(sender.entitytype))}(${sender.partyid})`,
-                    participationtypemask: 1,
-                  };
-                  activityParties.push(toSender);
-                }
-              });
+          // Remove undefined or null values
+          Object.keys(entityData).forEach((key) => {
+            if (entityData[key] === undefined || entityData[key] === null) {
+              delete entityData[key];
             }
-            if (record.to && Array.isArray(record.to)) {
-              (record.to as IPartyList[]).forEach((recipient) => {
-                if (recipient.partyid && recipient.entitytype) {
-                  const toRecipient = {
-                    [`partyid_${recipient.entitytype}@odata.bind`]: `/${this.getEntitySetName(String(recipient.entitytype))}(${recipient.partyid})`,
-                    participationtypemask: 2,
-                  };
-                  activityParties.push(toRecipient);
-                }
-              });
-            }
+          });
 
-            entityData = {
-              ...entityData,
-              phonenumber: record.phonenumber,
-              new_phonecallreason: 100000000,
-              new_phonecalloutcome: 100000000,
-              strava_note: record.strava_note,
-              strava_notecategory: 791930002,
-              strava_publishnote: true,
-              description: record.description,
-              softphon_queuename: record.softphon_queuename,
-              softphon_queuetimeseconds: record.softphon_queuetimeseconds,
-              softphon_genesyscloudwrapupcode: record.softphon_genesyscloudwrapupcode,
-              softphon_ivrtimeseconds: record.softphon_ivrtimeseconds,
-              actualdurationminutes: record.actualdurationminutes,
-              softphon_durationseconds: record.softphon_durationseconds,
-              softphon_dispositiondurationseconds: record.softphon_dispositiondurationseconds,
-              softphon_interactionurl: record.softphon_interactionurl,
-              actualstart: new Date("2025-05-21").toISOString(),
-              actualend: new Date("2025-05-22").toISOString(),
-              directioncode: true,
-              ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
-                [`regardingobjectid_${record.regardingobjectid_entitytype}_phonecall@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`
-              }),
-              ...(record.ownerid && record.ownerid_entitytype && {
-                ["ownerid_phonecall@odata.bind"]: `/${record.ownerid_entitytype}s(${record.ownerid})`
-              }),
-              ...(activityParties.length > 0 && { phonecall_activity_parties: activityParties }),
-            };
-            break;
+          // Create record using Web API
+          const createResult = await context.webAPI.createRecord(entityName, entityData);
+          const createdActivityId = createResult.id;
+
+          // Handle attachments
+          if (record.attachments && Array.isArray(record.attachments) && record.attachments.length > 0) {
+            for (const attachment of record.attachments) {
+              if (
+                typeof attachment === "object" &&
+                attachment !== null &&
+                "body" in attachment &&
+                "filename" in attachment &&
+                "filesize" in attachment &&
+                "mimetype" in attachment
+              ) {
+                await this.createAttachment(context, createdActivityId, entityName, {
+                  body: (attachment as IAttachment).body,
+                  filename: (attachment as IAttachment).filename,
+                  filesize: (attachment as IAttachment).filesize,
+                  mimetype: (attachment as IAttachment).mimetype,
+                });
+              }
+            }
           }
-          case "Appointment":
-            entityName = "appointment";
-            entityData = {
-              ...entityData,
-              scheduledstart: record.scheduledstart,
-              new_appttype: record.new_appttype,
-              new_apptmethod: record.new_apptmethod,
-              location: record.location,
-            };
-            break;
-          default:
-            throw new Error(`Unsupported activity type: ${record.activitytypecode}`);
+
+          successfulRestorations++;
+        } catch (recordError) {
+          // Store error for this specific record
+          const errorMessage = recordError instanceof Error ? recordError.message : "Unknown error";
+          errors.push({
+            recordId: record.id,
+            subject: record.subject || "Unnamed Record",
+            errorMessage,
+          });
+          console.error(`Error restoring record ${record.id}:`, recordError);
         }
-
-        // Remove undefined or null values
-        Object.keys(entityData).forEach(key =>
-          (entityData[key] === undefined || entityData[key] === null) && delete entityData[key]
-        );
-
-        // Create record using Web API
-        await context.webAPI.createRecord(entityName, entityData);
       }
 
-      // Refresh the view after successful restoration
+      // Refresh the view after processing all records
       await this.updateView();
+
+      // Construct final message
+      let finalMessage = "";
+      if (successfulRestorations > 0) {
+        finalMessage += `${successfulRestorations} record${successfulRestorations > 1 ? "s" : ""} restored successfully. `;
+      }
+      if (errors.length > 0) {
+        finalMessage += `Failed to restore ${errors.length} record${errors.length > 1 ? "s" : ""}:\n`;
+        errors.forEach((error, index) => {
+          finalMessage += `${index + 1}. Record "${error.subject}" (ID: ${error.recordId}): ${error.errorMessage}\n`;
+        });
+      } else {
+        finalMessage = "All records restored successfully.";
+      }
+
       this.setState({
         isLoading: false,
-        errorMessage: "Records restored successfully.",
+        errorMessage: finalMessage,
         selectedItems: [],
+        selectedIds: [],
       });
       this._selection.setAllSelected(false);
 
-      // Clear success message after 3 seconds
+      // Clear message after 10 seconds
       setTimeout(() => {
         this.setState({ errorMessage: null });
-      }, 3000);
-
-    } catch (error) {
-      console.error("Error restoring records:", error);
+      }, 10000);
+    } catch (generalError) {
+      console.error("Unexpected error during restoration:", generalError);
       this.setState({
         isLoading: false,
-        errorMessage: `Failed to restore records: ${error instanceof Error ? error.message : "Unknown error"}`,
+        errorMessage: `Unexpected error during restoration: ${generalError instanceof Error ? generalError.message : "Unknown error"}`,
       });
     }
-    //#endregion
   }
+
+  private async createAttachment(
+    context: ComponentFramework.Context<IInputs>,
+    activityId: string,
+    activityType: string,
+    attachment: {
+      body: string;
+      filename: string;
+      filesize: number;
+      mimetype: string;
+    }
+  ): Promise<void> {
+    const attachmentData = {
+      ["objectid_activitypointer@odata.bind"]: `/activitypointers(${activityId})`,
+      objecttypecode: activityType,
+      body: attachment.body,
+      subject: attachment.filename,
+      filename: attachment.filename,
+      mimetype: attachment.mimetype,
+      filesize: attachment.filesize,
+    };
+
+    await context.webAPI.createRecord("activitymimeattachment", attachmentData);
+  }
+
 
   openCrmForm = (entityName: string, id: string) => {
     const orgUrl = "https://nsminc-sandbox.crm.dynamics.com";
@@ -746,7 +881,24 @@ export class ActivityDatasetControl extends React.Component<
   };
 
   handlePageChange = (page: number): void => {
-    this.setState({ currentPage: page });
+    this.setState({ currentPage: page }, () => {
+      this.updateSelectionForPage();
+    });
+  };
+
+  updateSelectionForPage = () => {
+    const { filteredItems, currentPage, pageSize, selectedIds } = this.state;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+    // Deselect all, then select only those on this page that are in selectedIds
+    this._selection.setAllSelected(false);
+    paginatedItems.forEach((item, idx) => {
+      if (selectedIds.includes(item.id)) {
+        this._selection.setIndexSelected(idx, true, false);
+      }
+    });
   };
 
   openRecord = (item: IRecord): void => {
@@ -831,14 +983,6 @@ export class ActivityDatasetControl extends React.Component<
               disabled={this.state.selectedItems.length === 0}
 
             />
-            {/* <DefaultButton
-                key="restore"
-                iconProps={{ iconName: "Contact" }}
-                text="Restore"
-                disabled={this.state.selectedItems.length === 0}
-                onClick={() => this.restoreRecords()}
-                styles={buttonStyles}
-              /> */}
             <TextField
               placeholder="Search..."
               value={searchQuery}
