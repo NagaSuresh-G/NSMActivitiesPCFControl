@@ -1,28 +1,12 @@
 import { IInputs, IOutputs } from "../generated/ManifestTypes";
 import {
-  DetailsList,
-  DetailsListLayoutMode,
-  Selection,
-  IColumn,
-  mergeStyleSets,
-  TextField,
-  IButtonStyles,
-  Dropdown,
-  IDropdownOption,
-  PrimaryButton,
-  DefaultButton,
-  CheckboxVisibility,
-  Link,
+  DetailsList, DetailsListLayoutMode, Selection, IColumn, mergeStyleSets, TextField, IButtonStyles,
+  Dropdown, IDropdownOption, PrimaryButton, DefaultButton, CheckboxVisibility, Link,
 } from "@fluentui/react";
 import * as React from "react";
 import CustomEmailForm, { EmailFormProps } from "./Forms/CustomEmailForm";
-import TaskForm, { TaskFormProps } from "./Forms/TaskForm";
-import PhoneCallForm, { PhoneCallFormProps } from "./Forms/PhoneCallForm";
-import AppointmentForm, { AppointmentFormProps } from "./Forms/AppointmentForm";
-import { emailData } from "./Backend/EmailData";
-import { taskData } from "./Backend/TaskData";
-import { phoneCallData } from "./Backend/PhoneCallData";
-import { appointmentData } from "./Backend/AppointmentData";
+import { emailData, fetchAllEmailData } from "./Backend/EmailData";
+
 
 // Interface for combined activity records
 interface IRecord {
@@ -127,11 +111,7 @@ const buttonStyles: IButtonStyles = {
 
 
 const activityTypeOptions: IDropdownOption[] = [
-  // { key: "All", text: "All" },
   { key: "Email", text: "Email" },
-  // { key: "Task", text: "Task" },
-  // { key: "PhoneCall", text: "Phone Call" },
-  // { key: "Appointment", text: "Appointment" },
 ];
 
 export class ActivityDatasetControl extends React.Component<
@@ -462,6 +442,9 @@ export class ActivityDatasetControl extends React.Component<
                 ...entityData,
                 description: record.description,
                 directioncode: true,
+                statecode:record.statecode,
+                statuscode: record.statuscode,
+                prioritycode: record.prioritycode,
                 ...(record.regardingobjectid && record.regardingobjectid_entitytype && {
                   [`regardingobjectid_${record.regardingobjectid_entitytype}_email@odata.bind`]: `/${this.getEntitySetName(String(record.regardingobjectid_entitytype))}(${record.regardingobjectid})`,
                 }),
@@ -596,8 +579,27 @@ export class ActivityDatasetControl extends React.Component<
     }
   };
 
-  componentDidMount() {
-    this.updateView();
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+    try {
+      const allEmails = await fetchAllEmailData(this.context as ComponentFramework.Context<IInputs>);
+      this.setState({
+        items: allEmails.map(email => ({
+          ...email,
+          activitytypecode: "Email" as "Email"
+        })),
+        isLoading: false
+      }, () => {
+        this.updateView();
+      });
+    } catch (error) {
+      this.setState({
+        items: [],
+        filteredItems: [],
+        isLoading: false,
+        errorMessage: "Failed to load email data.",
+      });
+    }
   }
 
   componentDidUpdate(prevProps: IActivityDatasetControlProps, prevState: IActivityDatasetControlState) {
@@ -619,21 +621,9 @@ export class ActivityDatasetControl extends React.Component<
   async updateView(): Promise<void> {
     this.setState({ isLoading: true, errorMessage: null });
 
-    const recordId = "af9540d7-9ff5-ef11-be20-7c1e5232f746";
-
-    if (!recordId) {
-      this.setState({
-        items: [],
-        filteredItems: [],
-        isLoading: false,
-        errorMessage: "No parent record ID provided.",
-      });
-      return;
-    }
-
     try {
       const items: IRecord[] = [
-        ...emailData.map((email) => ({
+        ...this.state.items.map((email) => ({
           ...email,
           activitytypecode: "Email" as const,
           regarding: email.regardingobjectidname || "",
@@ -648,8 +638,6 @@ export class ActivityDatasetControl extends React.Component<
 
       const filteredItems = this.applyFilters(items);
 
-      console.log(`updateView: items=${items.length}, filteredItems=${filteredItems.length}`);
-
       this.setState({
         items,
         filteredItems,
@@ -657,7 +645,6 @@ export class ActivityDatasetControl extends React.Component<
         errorMessage: items.length === 0 ? "No records found for this ID." : null,
       });
     } catch (error) {
-      console.error("Error processing static data:", error);
       this.setState({
         items: [],
         filteredItems: [],

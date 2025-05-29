@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { ActivityDatasetControl, IActivityDatasetControlProps } from "./Components/EmailDatasetControl";
 
-export class EmailDataSetControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
+export class EmailPCFControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
   private _container: HTMLDivElement;
   private _context: ComponentFramework.Context<IInputs>;
   private _notifyOutputChanged: () => void;
