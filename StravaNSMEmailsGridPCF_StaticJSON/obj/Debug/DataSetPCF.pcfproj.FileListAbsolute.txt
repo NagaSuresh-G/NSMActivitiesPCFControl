@@ -1,0 +1,8 @@
+D:\NagaSuresh G\PCF Controls\DataSetPCF\obj\Debug\DataSetPCF.pcfproj.AssemblyReference.cache
+D:\NagaSuresh G\PCF Controls\DataSetPCF\obj\Debug\DataSetPCF.pcfproj.CoreCompileInputs.cache
+D:\NagaSuresh G\Strava NSM\StravaNSMEmailGridPCF_CRMdata\obj\Debug\DataSetPCF.pcfproj.AssemblyReference.cache
+D:\NagaSuresh G\Strava NSM\StravaNSMEmailGridPCF_CRMdata\obj\Debug\DataSetPCF.pcfproj.CoreCompileInputs.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMActivitiesGridPCF_StaticJSON\obj\Debug\DataSetPCF.pcfproj.AssemblyReference.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMActivitiesGridPCF_StaticJSON\obj\Debug\DataSetPCF.pcfproj.CoreCompileInputs.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMEmailsGridPCF_StaticJSON\obj\Debug\DataSetPCF.pcfproj.AssemblyReference.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMEmailsGridPCF_StaticJSON\obj\Debug\DataSetPCF.pcfproj.CoreCompileInputs.cache

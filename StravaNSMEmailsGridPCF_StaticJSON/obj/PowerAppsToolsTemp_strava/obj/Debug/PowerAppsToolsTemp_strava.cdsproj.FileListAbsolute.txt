@@ -1,0 +1,2 @@
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMEmailsGridPCF_StaticJSON\obj\PowerAppsToolsTemp_strava\obj\Debug\PowerAppsToolsTemp_strava.cdsproj.AssemblyReference.cache
+D:\NagaSuresh G\Strava NSM\PCF Control\StravaNSMEmailsGridPCF_StaticJSON\obj\PowerAppsToolsTemp_strava\obj\Debug\PowerAppsToolsTemp_strava.cdsproj.CoreCompileInputs.cache

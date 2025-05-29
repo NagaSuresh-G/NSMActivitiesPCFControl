@@ -1,0 +1,2 @@
+D:\NagaSuresh G\PCF Controls\DataSetPCF\obj\PowerAppsToolsTemp_ryd\obj\Debug\PowerAppsToolsTemp_ryd.cdsproj.AssemblyReference.cache
+D:\NagaSuresh G\PCF Controls\DataSetPCF\obj\PowerAppsToolsTemp_ryd\obj\Debug\PowerAppsToolsTemp_ryd.cdsproj.CoreCompileInputs.cache

@@ -1,0 +1,20 @@
+2024-07-24 18:52:16.783 - Info	
+Packing D:\NagaSuresh G\PCF Controls\DataSetPCF\obj\PowerAppsToolsTemp_ryd\obj\Debug\Metadata to bin\Debug\PowerAppsToolsTemp_ryd.zip
+
+2024-07-24 18:52:16.800 - Info	Processing Component: Entities
+2024-07-24 18:52:16.802 - Info	Processing Component: Roles
+2024-07-24 18:52:16.807 - Info	Processing Component: Workflows
+2024-07-24 18:52:16.807 - Info	Processing Component: FieldSecurityProfiles
+2024-07-24 18:52:16.807 - Info	Processing Component: Templates
+2024-07-24 18:52:16.808 - Info	Processing Component: EntityMaps
+2024-07-24 18:52:16.808 - Info	Processing Component: EntityRelationships
+2024-07-24 18:52:16.812 - Info	Processing Component: OrganizationSettings
+2024-07-24 18:52:16.814 - Info	Processing Component: optionsets
+2024-07-24 18:52:16.814 - Info	Processing Component: CustomControls
+2024-07-24 18:52:16.822 - Info	 - sampledatasetcontrolNS.sampledatasetcontrol
+2024-07-24 18:52:16.829 - Info	Processing Component: SolutionPluginAssemblies
+2024-07-24 18:52:16.831 - Info	Processing Component: EntityDataProviders
+2024-07-24 18:52:16.838 - Info	Processing Sharded Component Files
+2024-07-24 18:52:17.012 - Info	
+Unmanaged Pack complete.
+

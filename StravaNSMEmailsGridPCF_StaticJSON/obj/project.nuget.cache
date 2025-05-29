@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "iiYpKVhznMbF1gO73/diEYa+voTC5/1OA/aQeVS047o2IP5glghTesrwIEDb1Ia94P7USwLaRRcOOs9TEgrRDw==",
+  "success": true,
+  "projectFilePath": "D:\\NagaSuresh G\\Strava NSM\\PCF Control\\StravaNSMEmailsGridPCF_StaticJSON\\DataSetPCF.pcfproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.0\\microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512",
+    "C:\\Users\\NagaSureshGangula\\.nuget\\packages\\microsoft.powerapps.msbuild.pcf\\1.43.6\\microsoft.powerapps.msbuild.pcf.1.43.6.nupkg.sha512"
+  ],
+  "logs": []
+}
