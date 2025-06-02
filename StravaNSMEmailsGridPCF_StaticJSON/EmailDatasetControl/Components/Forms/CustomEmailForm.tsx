@@ -202,7 +202,7 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                 {data.from && data.from.length > 0 ? (
                                     data.from.map((sender, index) => (
                                         <React.Fragment key={sender.partyid}>
-                                            <a
+                                            {/* <a
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault();
@@ -214,9 +214,9 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                                     marginRight: "4px",
                                                 }}
                                                 title={sender.name}
-                                            >
+                                            > */}
                                                 {sender.name}
-                                            </a>
+                                            {/* </a> */}
                                             {index < data.from.length - 1 && (
                                                 <span style={{ marginRight: "4px" }}>;</span>
                                             )}
@@ -244,7 +244,7 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                 {data.to && data.to.length > 0 ? (
                                     data.to.map((recipient, index) => (
                                         <React.Fragment key={recipient.partyid}>
-                                            <a
+                                            {/* <a
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault();
@@ -256,9 +256,9 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                                     marginRight: "4px",
                                                 }}
                                                 title={recipient.name}
-                                            >
+                                            > */}
                                                 {recipient.name}
-                                            </a>
+                                            {/* </a> */}
                                             {index < data.to.length - 1 && (
                                                 <span style={{ marginRight: "4px" }}>;</span>
                                             )}
@@ -286,7 +286,7 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                 {data.cc && data.cc.length > 0 ? (
                                     data.cc.map((recipient, index) => (
                                         <React.Fragment key={recipient.partyid}>
-                                            <a
+                                            {/* <a
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault();
@@ -298,9 +298,9 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                                     marginRight: "4px",
                                                 }}
                                                 title={recipient.name}
-                                            >
+                                            > */}
                                                 {recipient.name}
-                                            </a>
+                                            {/* </a> */}
                                             {index < data.cc.length - 1 && (
                                                 <span style={{ marginRight: "4px" }}>;</span>
                                             )}
@@ -328,7 +328,7 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                 {data.bcc && data.bcc.length > 0 ? (
                                     data.bcc.map((recipient, index) => (
                                         <React.Fragment key={recipient.partyid}>
-                                            <a
+                                            {/* <a
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault();
@@ -340,9 +340,9 @@ const CustomEmailForm: React.FC<EmailFormProps> = ({ data, onClose, context }) =
                                                     marginRight: "4px",
                                                 }}
                                                 title={recipient.name}
-                                            >
+                                            > */}
                                                 {recipient.name}
-                                            </a>
+                                            {/* </a> */}
                                             {index < data.bcc.length - 1 && (
                                                 <span style={{ marginRight: "4px" }}>;</span>
                                             )}
